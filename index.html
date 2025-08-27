@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard VP</title>
+  <link rel="icon" type="image/png" href="icon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+      background: #f5f5f5;
+    }
+    #container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      transition: opacity 0.5s ease-in-out;
+      transform-origin: 0 0;
+    }
+    .hidden {
+      opacity: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="container">
+    <iframe 
+      id="dashFrame"
+      title="Dashboard - VP"
+      src="https://app.powerbi.com/view?r=eyJrIjoiZDc5MjNlODgtNTA5Yi00Yjk4LWE3YmMtYjMyZGI2YmU4ZjVmIiwidCI6ImM3NGViY2JkLWE4MGYtNDYwYy1hMDUzLTEwZDViNmY1ZWQwNSJ9"
+      allowFullScreen="true">
+    </iframe>
+  </div>
+
+  <script>
+    const iframe = document.getElementById("dashFrame");
+    const refreshInterval = 5 * 60 * 1000; // 5 minutos
+
+    // Atualização automática
+    setInterval(() => {
+      reloadIframe();
+    }, refreshInterval);
+
+    function reloadIframe() {
+      iframe.classList.add("hidden"); // fade-out
+      setTimeout(() => {
+        iframe.src = iframe.src; // recarrega
+        iframe.classList.remove("hidden"); // fade-in
+      }, 500);
+    }
+
+    // Ajuste automático de zoom conforme tela
+    function adjustZoom() {
+      const scaleX = window.innerWidth / iframe.offsetWidth;
+      const scaleY = window.innerHeight / iframe.offsetHeight;
+      const scale = Math.min(scaleX, scaleY); 
+      iframe.style.transform = `scale(${scale})`;
+    }
+
+    window.addEventListener("resize", adjustZoom);
+    window.addEventListener("load", adjustZoom);
+  </script>
+
+</body>
+</html>
