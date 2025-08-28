@@ -15,18 +15,23 @@
       overflow: hidden;
       background: #f5f5f5;
     }
-    #container {
+
+    .iframe-container {
       position: relative;
       width: 100%;
       height: 100%;
     }
+
     iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 100%;
       border: none;
       transition: opacity 0.5s ease-in-out;
-      transform-origin: 0 0;
     }
+
     .hidden {
       opacity: 0;
     }
@@ -34,11 +39,11 @@
 </head>
 <body>
 
-  <div id="container">
+  <div class="iframe-container">
     <iframe 
       id="dashFrame"
       title="Dashboard - VP"
-      src="https://app.powerbi.com/view?r=eyJrIjoiZDc5MjNlODgtNTA5Yi00Yjk4LWE3YmMtYjMyZGI2YmU4ZjVmIiwidCI6ImM3NGViY2JkLWE4MGYtNDYwYy1hMDUzLTEwZDViNmY1ZWQwNSJ9"
+      src="https://app.powerbi.com/view?r=eyJrIjoiZDc5MjNlODgtNTA5Yi00Yjk4LWE3YmMtYjMyZGI2YmU4ZjVmIiwidCI6ImM3NGViY2JkLWE4MGYtNDYwYy1hMDUzLTEwZDViNmY1ZWQwNSJ9&chromeless=true&navContentPaneEnabled=false&filterPaneEnabled=false"
       allowFullScreen="true">
     </iframe>
   </div>
@@ -47,29 +52,14 @@
     const iframe = document.getElementById("dashFrame");
     const refreshInterval = 5 * 60 * 1000; // 5 minutos
 
-    // Atualização automática
+    // Atualização automática do iframe com efeito de fade
     setInterval(() => {
-      reloadIframe();
-    }, refreshInterval);
-
-    function reloadIframe() {
       iframe.classList.add("hidden"); // fade-out
       setTimeout(() => {
-        iframe.src = iframe.src; // recarrega
+        iframe.src = iframe.src;       // recarrega o dashboard
         iframe.classList.remove("hidden"); // fade-in
       }, 500);
-    }
-
-    // Ajuste automático de zoom conforme tela
-    function adjustZoom() {
-      const scaleX = window.innerWidth / iframe.offsetWidth;
-      const scaleY = window.innerHeight / iframe.offsetHeight;
-      const scale = Math.min(scaleX, scaleY); 
-      iframe.style.transform = `scale(${scale})`;
-    }
-
-    window.addEventListener("resize", adjustZoom);
-    window.addEventListener("load", adjustZoom);
+    }, refreshInterval);
   </script>
 
 </body>
