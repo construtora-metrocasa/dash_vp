@@ -29,11 +29,6 @@
       width: 100%;
       height: 100%;
       border: none;
-      transition: opacity 0.5s ease-in-out;
-    }
-
-    .hidden {
-      opacity: 0;
     }
   </style>
 </head>
@@ -47,21 +42,5 @@
     </iframe>
   </div>
 
-  <script>
-    const iframe = document.getElementById("dashFrame");
-    const refreshInterval = 10 * 60 * 1000; // 5 minutos
-
-    // Atualização automática do iframe com efeito de fade
-    setInterval(() => {
-      iframe.classList.add("hidden"); // fade-out
-      setTimeout(() => {
-        iframe.src = iframe.src;       // recarrega o dashboard
-        iframe.classList.remove("hidden"); // fade-in
-      }, 500);
-    }, refreshInterval);
-  </script>
-
 </body>
 </html>
-
-
